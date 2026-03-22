@@ -24,11 +24,13 @@ export default async function handler(req, res) {
   const { content } = req.body;
   const apiKey = process.env.DEEPSEEK_API_KEY; // Vercel 会从后台环境变量读取
 
-  const prompt = `
-    你是一个知识管理助手。请对以下用户输入的笔记进行结构化处理。
-    输出格式必须是严格的 JSON：{"summary": "...", "tags": ["tag1", "tag2"]}
-    内容："""${content}"""
-  `;
+const prompt = `
+  你是一个高级知识管理专家。请对以下内容进行结构化处理。
+  要求：
+  1. 使用 Markdown 语法对摘要进行排版（可以用加粗强调重点，用列表梳理要点）。
+  2. 输出格式必须是严格的 JSON：{"summary": "...", "tags": ["tag1", "tag2"]}
+  内容："""${content}"""
+`;
 
   try {
     const response = await fetch('https://api.deepseek.com/v1/chat/completions', {

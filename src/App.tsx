@@ -1,5 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+// 删掉 React，只保留需要的 hook
+import { useState, useEffect, useMemo } from 'react'; 
 import { Plus, Search, BookOpen, Tag, Trash2, Calendar, Sparkles, X } from 'lucide-react';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
 
 // --- 数据结构定义 ---
 interface Note {
@@ -16,7 +20,7 @@ interface Note {
 // 它会请求你本地运行的 proxy.js 代理服务
 const processNoteWithDeepSeek = async (content: string): Promise<{ summary: string, tags: string[] }> => {
   try {
-    const response = await fetch('http://localhost:3001/api/process-note', {
+    const response = await fetch('https://light-kb-6skg.vercel.app//api/process-note', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ content }),
@@ -195,7 +199,11 @@ export default function LightKB() {
                     <Trash2 size={18} />
                   </button>
                 </div>
-                <p className="text-slate-600 mb-4 leading-relaxed whitespace-pre-wrap">{note.content}</p>
+                <div className="prose prose-slate prose-sm max-w-none mb-4 text-slate-600 leading-relaxed">
+                <Markdown remarkPlugins={[remarkGfm]}>
+                {note.content}
+                </Markdown>
+                </div>
                 <div className="flex items-center justify-between">
                   <div className="flex gap-2">
                     {note.tags.map(tag => (
