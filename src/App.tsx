@@ -117,16 +117,30 @@ export default function LightKB() {
       <main className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="space-y-8">
           <section className="bg-indigo-50 dark:bg-indigo-900/20 p-5 rounded-2xl border border-indigo-100 dark:border-indigo-900/30">
-            <h3 className="flex items-center gap-2 mb-4 text-indigo-700 dark:text-indigo-400 font-bold"><Sparkles size={18} />今日知识回顾</h3>
-            <div className="space-y-3">
-              {dailyReviewNotes.map(note => (
-                <div key={note.id} className="bg-white dark:bg-slate-800 p-3 rounded-xl border dark:border-slate-700 text-sm">
-                  <p className="font-semibold dark:text-slate-100">{note.title}</p>
-                  <p className="text-slate-500 text-xs line-clamp-2">{note.summary}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+  <h3 className="flex items-center gap-2 mb-4 text-indigo-700 dark:text-indigo-400 font-bold">
+    <Sparkles size={18} />
+    今日知识回顾
+  </h3>
+  <div className="space-y-3">
+    {dailyReviewNotes.length > 0 ? dailyReviewNotes.map(note => (
+      /* --- 关键：确保以下所有内容都在这个括号 ( ) 里面 --- */
+      <div key={note.id} className="bg-white dark:bg-slate-800 p-3 rounded-xl border dark:border-slate-700 text-sm">
+        <p className="font-semibold dark:text-slate-100">{note.title}</p>
+        <p className="text-slate-500 text-xs line-clamp-2 mb-2">{note.summary}</p>
+        
+        {/* 这里就是你刚才报错的第 103 行，现在它能“看见” note 了 */}
+        <div className="text-[10px] text-indigo-400 flex items-center gap-1">
+          <Calendar size={10} /> {new Date(note.created_at).toLocaleDateString()}
+        </div>
+      </div>
+      /* ----------------------------------------------- */
+    )) : (
+      <p className="text-slate-400 text-sm">记录更多笔记以开启回顾</p>
+    )}
+  </div>
+</section>
+
+
           <section>
             <h3 className="font-bold mb-3 flex items-center gap-2 dark:text-slate-200"><Tag size={18} /> 标签筛选</h3>
             <div className="flex flex-wrap gap-2">
