@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+// 删掉 React，只保留需要的 hook
+import { useState, useEffect, useMemo } from 'react'; 
 import { Plus, Search, BookOpen, Tag, Trash2, Calendar, Sparkles, X } from 'lucide-react';
 
 // --- 数据结构定义 ---
