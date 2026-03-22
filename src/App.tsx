@@ -22,7 +22,6 @@ const processNoteWithDeepSeek = async (content: string): Promise<{ summary: stri
   try {
 
     const response = await fetch('https://light-kb-6skg.vercel.app/api/process-note', {
->>>>>>> 1755b91863609eee1097fd7619588ce0c4b32212
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ content }),
@@ -193,37 +192,57 @@ export default function LightKB() {
           </div>
 
           <div className="grid gap-4">
-            {filteredNotes.length > 0 ? filteredNotes.map(note => (
-              <article key={note.id} className="bg-white p-5 rounded-2xl border group hover:border-indigo-200 transition-all shadow-sm">
-                <div className="flex justify-between items-start mb-2">
-                  <h2 className="font-bold text-lg">{note.title}</h2>
-                  <button onClick={() => deleteNote(note.id)} className="text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Trash2 size={18} />
-                  </button>
-                </div>
-                <div className="prose prose-slate prose-sm max-w-none mb-4 text-slate-600 leading-relaxed">
-                <Markdown remarkPlugins={[remarkGfm]}>
-                {note.content}
-                </Markdown>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-2">
-                    {note.tags.map(tag => (
-                      <span key={tag} className="text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded">#{tag}</span>
-                    ))}
-                  </div>
-                  <span className="text-xs text-slate-400">{new Date(note.created_at).toLocaleDateString()}</span>
-                </div>
-              </article>
-            )) : (
-              <div className="text-center py-20 text-slate-400">
-                <BookOpen size={48} className="mx-auto mb-4 opacity-20" />
-                <p>没有找到相关笔记</p>
-              </div>
-            )}
-          </div>
+  {filteredNotes.length > 0 ? (
+    filteredNotes.map((note) => (
+      <article
+        key={note.id}
+        className="bg-white p-5 rounded-2xl border group hover:border-indigo-200 transition-all shadow-sm"
+      >
+        <div className="flex justify-between items-start mb-2">
+          <h2 className="font-bold text-lg text-slate-800">{note.title}</h2>
+          <button
+            onClick={() => deleteNote(note.id)}
+            className="text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+          >
+            <Trash2 size={18} />
+          </button>
         </div>
-      </main>
+
+        {/* --- Markdown 渲染核心区域 --- */}
+        {/* 注意：添加了 prose-headings:font-bold 等类名确保强制生效 */}
+{/* 找到显示内容的区域，确保它是被 Markdown 组件包裹的 */}
+        <div className="prose prose-sm prose-slate max-w-none mb-4 text-slate-600">
+         <Markdown remarkPlugins={[remarkGfm]}>
+          {note.content}
+         </Markdown>
+        </div>
+        {/* --------------------------- */}
+
+        <div className="flex items-center justify-between">
+          <div className="flex flex-wrap gap-2">
+            {note.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs bg-indigo-50 text-indigo-500 px-2 py-1 rounded-md"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+          <span className="text-xs text-slate-400">
+            {new Date(note.created_at).toLocaleDateString()}
+          </span>
+        </div>
+      </article>
+    ))
+  ) : (
+    <div className="text-center py-20 text-slate-400">
+      <BookOpen size={48} className="mx-auto mb-4 opacity-20" />
+      <p>没有找到相关笔记</p>
+    </div>
+  )}
+</div>
+
 
       {isEditing && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
