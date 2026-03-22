@@ -17,7 +17,7 @@ interface Note {
 // 它会请求你本地运行的 proxy.js 代理服务
 const processNoteWithDeepSeek = async (content: string): Promise<{ summary: string, tags: string[] }> => {
   try {
-    const response = await fetch('https://light-kb-xy1s.vercel.app/api/process-note', {
+    const response = await fetch('https://light-kb-6skg.vercel.app/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ content }),
