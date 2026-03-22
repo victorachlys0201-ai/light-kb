@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+/* 针对 Tailwind v4 的手动暗黑模式配置 */
+@theme {
+  --font-sans: "Inter", "system-ui", "sans-serif";
+}
+
+/* 关键步骤：告诉 Tailwind，当父级有 .dark 类时，启用暗黑变量 */
+@layer base {
+  :root {
+    --background: 210 40% 98%; /* slate-50 */
+    --foreground: 222.2 84% 4.9%; /* slate-900 */
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%; /* slate-950 */
+    --foreground: 210 40% 98%; /* slate-100 */
+  }
+}
+
+/* 或者更简单的方法，直接在 v4 中声明支持 class 切换 */
+@custom-variant dark (&:where(.dark, .dark *));

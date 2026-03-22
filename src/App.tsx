@@ -13,6 +13,7 @@ interface Note {
   last_viewed_at: number;
 }
 
+
 const processNoteWithDeepSeek = async (content: string) => {
   try {
     const response = await fetch('https://light-kb-6skg.vercel.app/api/process-note', {

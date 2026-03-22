@@ -1,9 +1,12 @@
-// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class', // ✅ 新增这一行
+  darkMode: 'class', // 重点：这一行没写，点击按钮页面就不会变！
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  // ... 其他保持不变
+  theme: {
+    extend: {},
+  },
+  plugins: [],
 }
